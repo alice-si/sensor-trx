@@ -2,6 +2,7 @@
 const Web3 = require('truffle-contract/node_modules/web3');
 const Contract = require('truffle-contract');
 const Promise = require('bluebird');
+const Config = require('./config');
 
 const provider = new Web3.providers.HttpProvider('http://localhost:8545');
 const web3 = new Web3();
@@ -27,26 +28,31 @@ async function testDeployment() {
   };
 
 
-  let authentication = await Authentication.new(config);
+  let project1;
+  return Authentication.new(config).then(function (authentication) {
+    authentication.signup('name1', config).then(function () {
+      return authentication.signup('qwe', config);
+    }).then(function () {
+      return authentication.getProjectAt(0);
+    }).then(function (projectAddr1) {
+      project1 = Project.at(projectAddr1);
+      // add claims
+      return project1.addClaim(50, 0, 0, config);
+    }).then(function () {
+      return project1.addClaim(70, 100, 0, config);
+    }).then(function () {
+      let res = {
+        project1: project1.address,
+        auth: authentication.address
+      };
 
-  // // TODO I am not sure about setting it
-  await authentication.signup('name1', config);
-  await authentication.signup('qwe', config);
-
-  let projectAddr1 = await authentication.getProjectAt(0);
-  let project1 = Project.at(projectAddr1);
-
-  // add claims
-  await project1.addClaim(50, 0, 0, config);
-  await project1.addClaim(70, 100, 0, config);
-
-  let res = {
-    project1: projectAddr1,
-    auth: authentication.address
-  };
-
-  console.log('Deploying finished');
-  console.log(res);
+      console.log('Deploying finished');
+      console.log(res);
+    }).catch(function (err) {
+      console.log('Error occured: ');
+      console.log(err);
+    });
+  });
 }
 
 
