@@ -1,6 +1,7 @@
 const Web3 = require('truffle-contract/node_modules/web3');
 const Contract = require('truffle-contract');
 const Config = require('./config');
+const Promise = require('bluebird');
 
 let EthProxy = function () {};
 
@@ -41,6 +42,7 @@ EthProxy.processData = async function (data) {
           if (fitToClaim(claimDetails, data)) {
             console.log('Fit to claim');
             console.log(claimDetails);
+            await Promise.promisify(web3.personal.unlockAccount)(Config.mainAccount, Config.mainPassword);
             let result = await project.validate(data.quality, data.time, claimNumber, config);
             return result;
           } else {
@@ -54,21 +56,22 @@ EthProxy.processData = async function (data) {
 };
 
 
-EthProxy.saveInfo = function (data) {
-    console.log('Starting sending data to blockchain...: ' + JSON.stringify(data));
-    const Project = loadContract('Project');
-
-    // TODO clean logging
-    console.log(Project);
-    console.log('Getting project at ' + Config.projectContractAddress);
-    let project = Project.at(Config.projectContractAddress);
-    
-    console.log('Trying to validate on project');
-    return project.validate(data.quality, data.time);
-};
+// TODO remove this commented function
+// EthProxy.saveInfo = function (data) {
+//     console.log('Starting sending data to blockchain...: ' + JSON.stringify(data));
+//     const Project = loadContract('Project');
+//
+//     // TODO clean logging later
+//     console.log(Project);
+//     console.log('Getting project at ' + Config.projectContractAddress);
+//     let project = Project.at(Config.projectContractAddress);
+//
+//     console.log('Trying to validate on project');
+//     return project.validate(data.quality, data.time);
+// };
 
 function loadContract(contractName) {
-    // TODO clean logging
+    // TODO clean logging later
     console.log('Contract loading ' + contractName);
     const contractsFolder = '../blockchain/build/contracts/';
 

@@ -49,7 +49,7 @@ async function testDeployment() {
 function loadContract(contractName) {
   // TODO clean logging
   console.log('Contract loading ' + contractName);
-  const contractsFolder = './build/contracts/';
+  const contractsFolder = '../blockchain/build/contracts/';
 
   console.log('Getting artefacts from folder ' + contractsFolder);
   const artefacts = require(contractsFolder + contractName + '.json');
