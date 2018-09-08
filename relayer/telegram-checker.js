@@ -14,7 +14,8 @@ bot.on('channel_post', (msg) => {
             let obj = JSON.parse(data);
             // EthProxy.saveInfo(obj).then(function (res) {
           EthProxy.processData(obj).then(function (res) {
-                console.log('Successfully saved: ' + res);
+                console.log('Successfully saved: ');
+                console.log(res);
             }, function (err) {
                 console.log('Some error occured: ' + err);
             });

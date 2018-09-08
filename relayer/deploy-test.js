@@ -1,9 +1,11 @@
-const Web3 = require('web3');
+// const Web3 = require('web3');
+const Web3 = require('truffle-contract/node_modules/web3');
 const Contract = require('truffle-contract');
 const Promise = require('bluebird');
 
-let web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-let provider = web3.currentProvider;
+const provider = new Web3.providers.HttpProvider('http://localhost:8545');
+const web3 = new Web3();
+web3.setProvider(provider);
 
 async function testDeployment() {
   const Project = loadContract('Project');
@@ -21,19 +23,18 @@ async function testDeployment() {
   };
 
 
-  let project1 = await Project.new(config);
   let authentication = await Authentication.new(config);
-
-  // add claims
-  await project1.addClaim(50, 0, 0, config);
-  await project1.addClaim(70, 100, 0, config);
-
 
   // // TODO I am not sure about setting it
   await authentication.signup('name1', config);
   await authentication.signup('qwe', config);
 
   let projectAddr1 = await authentication.getProjectAt(0);
+  let project1 = Project.at(projectAddr1);
+
+  // add claims
+  await project1.addClaim(50, 0, 0, config);
+  await project1.addClaim(70, 100, 0, config);
 
   let res = {
     project1: projectAddr1,
@@ -58,7 +59,7 @@ function loadContract(contractName) {
 
   console.log('Contract obj created. Setting provider for contract obj');
 
-  contractObj.setProvider(web3.currentProvider);
+  contractObj.setProvider(provider);
 
   console.log('Returning contract');
   return contractObj;
