@@ -2,18 +2,19 @@ import store from '../../../store'
 import ProjectContract from '../../../../build/contracts/Project.json'
 const contract = require('truffle-contract')
 
-// TODO: take user input instead of hardcoded sensor address
-const SENSOR_ADDR = '0xEA8B4a31ac56b43fE98ad35218f5D33e6e3752CA'
+// TODO: take user input instead of hardcoded params
+const CLAIM_MIN_VALUE = 10
+const CLAIM_MIN_TIME = 20
 
-export const SENSOR_ADDED = 'SENSOR_ADDED'
-function sensorAdded(result) {
+export const CLAIM_ADDED = 'CLAIM_ADDED'
+function claimAdded(result) {
   return {
-    type: SENSOR_ADDED,
+    type: CLAIM_ADDED,
     payload: result
   }
 }
 
-export function addSensor() {
+export function addClaim() {
   let web3 = store.getState().web3.web3Instance
   let projectAddress = store.getState().user.data.project
 
@@ -37,14 +38,14 @@ export function addSensor() {
           console.error(error);
         }
 
-      // Attempt to add a sensor.
-      projectInstance.addSensor(SENSOR_ADDR, {from: coinbase})
+      // Attempt to add a claim.
+      projectInstance.addClaim(CLAIM_MIN_VALUE, CLAIM_MIN_TIME, {from: coinbase})
         .then(function(result) {
-          console.log('addSensor result', result)
-          dispatch(sensorAdded(result))
+          console.log('addClaim result', result)
+          dispatch(claimAdded(result))
         })
         .catch(function(result) {
-          console.error('Sensor was not added: ', result)
+          console.error('Claim was not added: ', result)
         })
       })
     }
