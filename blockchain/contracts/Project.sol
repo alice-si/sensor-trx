@@ -23,4 +23,9 @@ contract Project is Ownable {
         sensorsManager.deactivateSensor(_sensor);
     }
 
+    function validate() {
+//        address sender = validator.pullAddress(bytes32 messageHash, uint8 v, bytes32 r, bytes32 s);
+//        validator.verify(value, time)
+    }
+
 }
