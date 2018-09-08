@@ -8,6 +8,9 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
+import AddClaimButtonContainer from '../../user/ui/addclaimbutton/AddClaimButtonContainer'
+
+
 const styles = theme => ({
   paper: {
     position: 'relative',
@@ -66,9 +69,7 @@ class SimpleClaimModal extends React.Component {
                 />
               </CardContent>
               <CardActions className={classes.actions}>
-                <Button className={classes.addButton} variant="contained" color="primary">
-                  Add Claim
-                </Button>
+                <AddClaimButtonContainer />
               </CardActions>
             </div>
           </Modal>
