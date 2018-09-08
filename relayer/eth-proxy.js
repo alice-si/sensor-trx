@@ -10,6 +10,10 @@ let provider = web3.currentProvider;
 EthProxy.saveInfo = function (data) {
     console.log('Starting sending data to blockchain...: ' + JSON.stringify(data));
     const Project = loadContract('Project');
+
+    // TODO clean logging
+    console.log(Project);
+    console.log('Getting project at ' + Config.projectContractAddress);
     let project = Project.at(Config.projectContractAddress);
     
     return project.validate(data.quality, data.time);
@@ -25,8 +29,12 @@ function loadContract(contractName) {
 
     console.log('Creating contractObj');
     var contractObj = Contract(artefacts);
+
+    console.log('Contract obj created. Setting provider for contract obj');
+
     contractObj.setProvider(provider);
-  
+
+    console.log('Returning contract');
     return contractObj;
 }
 
