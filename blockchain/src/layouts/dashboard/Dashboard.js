@@ -12,14 +12,16 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Chip from '@material-ui/core/Chip';
+import CheckCircle from '@material-ui/icons/CheckCircle';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import WifiTethering from '@material-ui/icons/WifiTethering';
 import Assignment from '@material-ui/icons/Assignment';
-
+import ToggleSensorButtonContainer
+  from "../../user/ui/togglesensorbutton/ToggleSensorButtonContainer";
 
 const styles = theme => ({
   root: {
@@ -40,6 +42,22 @@ const styles = theme => ({
     right: -theme.spacing.unit * 2,
     bottom: -theme.spacing.unit * 2,
   },
+  colorBar: {},
+  colorChecked: {},
+  colorSwitchBase: {
+    color: '#aaa',
+    '&$colorChecked': {
+      color: '#72CC71',
+      '& + $colorBar': {
+        backgroundColor: '#72CC71',
+      },
+    },
+  },
+  chip: {
+    verified: {
+      backgroundColor: '#72CC71'
+    }
+  }
 })
 
 function generate(element) {
@@ -100,9 +118,7 @@ class Dashboard extends Component {
                     secondary={secondary ? 'Secondary text' : null}
                   />
                   <ListItemSecondaryAction>
-                    <IconButton aria-label="Delete">
-                      <DeleteIcon />
-                    </IconButton>
+                    <ToggleSensorButtonContainer />
                   </ListItemSecondaryAction>
                 </ListItem>,
               )}
@@ -137,9 +153,8 @@ class Dashboard extends Component {
                     secondary={secondary ? 'Secondary text' : null}
                   />
                   <ListItemSecondaryAction>
-                    <IconButton aria-label="Delete">
-                      <DeleteIcon />
-                    </IconButton>
+                    {/*<Chip color="primary" variant="outlined" label="Not Verified" />*/}
+                    <Chip color="primary" avatar={<Avatar><CheckCircle color="inherit" /></Avatar>} label="Verified" />
                   </ListItemSecondaryAction>
                 </ListItem>,
               )}
