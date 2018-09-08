@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Grid from '@material-ui/core/Grid';
 
 // Styles
 import './css/oswald.css'
@@ -31,6 +32,9 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  container: {
+    padding: '40px'
+  }
 };
 
 
@@ -72,7 +76,11 @@ class App extends Component {
             <OnlyAuthLinks />
           </Toolbar>
         </AppBar>
-        {this.props.children}
+        <Grid container className={classes.container}>
+          <Grid item xs={12}>
+            {this.props.children}
+          </Grid>
+        </Grid>
       </div>
     );
   }
