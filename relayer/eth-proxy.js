@@ -16,6 +16,7 @@ EthProxy.saveInfo = function (data) {
     console.log('Getting project at ' + Config.projectContractAddress);
     let project = Project.at(Config.projectContractAddress);
     
+    console.log('Trying to validate on project');
     return project.validate(data.quality, data.time);
 };
 
