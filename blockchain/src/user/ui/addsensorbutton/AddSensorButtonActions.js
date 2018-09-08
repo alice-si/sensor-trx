@@ -1,9 +1,10 @@
 import store from '../../../store'
 import ProjectContract from '../../../../build/contracts/Project.json'
+
 const contract = require('truffle-contract')
 
 // TODO: take user input instead of hardcoded sensor address
-const SENSOR_ADDR = '0xEA8B4a31ac56b43fE98ad35218f5D33e6e3752CA'
+const SENSOR_ADDR = '0x7064344afee2040582Be96fF8FeA2c56134A4493'
 
 export const SENSOR_ADDED = 'SENSOR_ADDED'
 function sensorAdded(result) {

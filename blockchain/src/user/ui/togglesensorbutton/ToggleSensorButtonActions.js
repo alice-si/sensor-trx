@@ -1,5 +1,6 @@
 import store from '../../../store'
 import ProjectContract from '../../../../build/contracts/Project.json'
+
 const contract = require('truffle-contract')
 
 // TODO: take user input instead of hardcoded params
@@ -9,7 +10,8 @@ export const SENSOR_DEACTIVATED = 'SENSOR_DEACTIVATED'
 function sensorDeactivated(result) {
   return {
     type: SENSOR_DEACTIVATED,
-    payload: result}
+    payload: result
+  }
 }
 
 export const SENSOR_ACTIVATED = 'SENSOR_ACTIVATED'

@@ -29,11 +29,11 @@ class ToggleSensorButton extends React.Component {
   };
 
   render() {
-    const { classes } = this.props
+    const { classes, sensorId, isActive } = this.props
     return (
       <Switch
-        checked={true}
-        onChange={this.handleSensorSwitchChange('thisSensor')}
+        checked={isActive}
+        onChange={this.handleSensorSwitchChange(sensorId)}
         value="Activated"
         classes={{
           switchBase: classes.colorSwitchBase,

@@ -6,12 +6,12 @@ const mapStateToProps = (state, ownProps) => {
   return {}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     onAddSensorClick: (event) => {
       event.preventDefault();
-
       dispatch(addSensor())
+      props.onClick()
     }
   }
 }

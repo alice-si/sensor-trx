@@ -1,6 +1,10 @@
 import AuthenticationContract from '../../../../build/contracts/Authentication.json'
+import ProjectContract from '../../../../build/contracts/Project.json'
+import SensorsManagerContract from '../../../../build/contracts/SensorsManager.json'
 import { browserHistory } from 'react-router'
 import store from '../../../store'
+
+import { fetchSensors } from "../sensors/SensorsActions";
 
 const contract = require('truffle-contract')
 
@@ -43,22 +47,48 @@ export function loginUser() {
             // If no error, login user.
             user.name = web3.toUtf8(result)
             return authenticationInstance.getProject({from: coinbase});
-          }).then(function(result) {
-            user.project = result;
+          }).then(function(projectAddress) {
+            console.log('projectAddress', projectAddress)
+            user.project = projectAddress;
 
+            let projectContract = contract(ProjectContract)
+            projectContract.setProvider(web3.currentProvider)
 
-            dispatch(userLoggedIn(user));
+            let projectInstance = projectContract.at(projectAddress)
+            projectInstance.sensorsManager().then((sensorsManagerAddress) => {
+              console.log('sensorsManagerAddress', sensorsManagerAddress)
+              user.sensorsManagerAddress = sensorsManagerAddress
 
-            // Used a manual redirect here as opposed to a wrapper.
-            // This way, once logged in a user can still access the home page.
-            var currentLocation = browserHistory.getCurrentLocation()
+              dispatch(userLoggedIn(user));
 
-            if ('redirect' in currentLocation.query)
-            {
-              return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
-            }
+              let sensorsManagerContract = contract(SensorsManagerContract)
+              sensorsManagerContract.setProvider(web3.currentProvider)
 
-            return browserHistory.push('/dashboard')
+              let sensorsManagerInstance = sensorsManagerContract.at(sensorsManagerAddress)
+              sensorsManagerInstance.SensorActivated().watch ( (err, response) => {
+                console.log('Sensor Activated Event', response)
+                dispatch(fetchSensors())
+              });
+              sensorsManagerInstance.SensorDeactivated().watch ( (err, response) => {
+                console.log('Sensor Deactivated Event', response)
+                dispatch(fetchSensors())
+              });
+              sensorsManagerInstance.SensorAdded().watch ( (err, response) => {
+                console.log('Sensor Added Event', response)
+                dispatch(fetchSensors())
+              });
+
+              // Used a manual redirect here as opposed to a wrapper.
+              // This way, once logged in a user can still access the home page.
+              var currentLocation = browserHistory.getCurrentLocation()
+
+              if ('redirect' in currentLocation.query)
+              {
+                return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
+              }
+
+              return browserHistory.push('/dashboard')
+            })
           })
           .catch(function(result) {
             // If error, go to signup page.
