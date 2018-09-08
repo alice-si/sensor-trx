@@ -8,50 +8,58 @@ const provider = new Web3.providers.HttpProvider('http://localhost:8545');
 const web3 = new Web3();
 web3.setProvider(provider);
 
-async function testDeployment() {
-  // unlock mainAccount
-  await Promise.promisify(web3.personal.unlockAccount)(Config.mainAccount, Config.mainPassword);
-
-
+function testDeployment() {
   const Project = loadContract('Project');
-  // console.log(Project);
   const Authentication = loadContract('Authentication');
 
-  var accounts = await Promise.promisify(web3.eth.getAccounts)();
-  var mainAccount = accounts[0];
-
-  console.log('Main account is equal: ' + mainAccount);
-
-  const config = {
-    from: mainAccount,
-    gas: 6000000
-  };
-
-
-  let project1;
-  return Authentication.new(config).then(function (authentication) {
-    authentication.signup('name1', config).then(function () {
-      return authentication.signup('qwe', config);
-    }).then(function () {
-      return authentication.getProjectAt(0);
-    }).then(function (projectAddr1) {
-      project1 = Project.at(projectAddr1);
-      // add claims
-      return project1.addClaim(50, 0, 0, config);
-    }).then(function () {
-      return project1.addClaim(70, 100, 0, config);
-    }).then(function () {
-      let res = {
-        project1: project1.address,
-        auth: authentication.address
+  // unlock mainAccount
+  Promise.promisify(web3.personal.unlockAccount)(Config.mainAccount, Config.mainPassword).then(function() {
+    return Promise.promisify(web3.eth.getAccounts)().then(function (accounts) {
+      const mainAccount = accounts[0];
+      let project1;
+      const config = {
+        from: mainAccount,
+        gas: 6000000
       };
+      console.log('Main account is equal: ' + mainAccount);
 
-      console.log('Deploying finished');
-      console.log(res);
-    }).catch(function (err) {
-      console.log('Error occured: ');
-      console.log(err);
-    });
+      console.log('Deploying started');
+      return Authentication.new(config).then(function (authentication) {
+        console.log('Authentication deployed: ' + authentication.address);
+        authentication.signup('name1', config).then(function () {
+          return authentication.signup('qwe', config);
+        }).then(function () {
+          return authentication.getProjectAt(0);
+        }).then(function (projectAddr1) {
+          project1 = Project.at(projectAddr1);
+          // add claims
+          return project1.addClaim(50, 0, 0, config);
+        }).then(function () {
+          return project1.addClaim(70, 100, 0, config);
+        }).then(function () {
+          let res = {
+            project1: project1.address,
+            auth: authentication.address
+          };
+
+          console.log('Deploying finished :)');
+          console.log(res);
+        }).catch(function (err) {
+          console.log('Error occured: ');
+          console.log(err);
+        });
+      });
+  });
+
+
+
+
+
+
+
+
+
+
   });
 }
 
