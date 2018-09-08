@@ -16,13 +16,18 @@ EthProxy.saveInfo = function (data) {
 };
 
 function loadContract(contractName) {
-    const contractsFolder = '../../blockchain/build/contracts/';
+    // TODO clean logging
+    console.log('Contract loading ' + contractName);
+    const contractsFolder = '../blockchain/build/contracts/';
+
+    console.log('Getting artefacts from folder ' + contractsFolder);
     const artefacts = require(contractsFolder + contractName + '.json');
+
+    console.log('Creating contractObj');
     var contractObj = Contract(artefacts);
     contractObj.setProvider(provider);
   
     return contractObj;
-    return {};
 }
 
 module.exports = EthProxy;
