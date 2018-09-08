@@ -12,7 +12,8 @@ bot.on('channel_post', (msg) => {
         if (checkMessage(data)) {
             console.log('Saving data in blockchain...');
             let obj = JSON.parse(data);
-            EthProxy.saveInfo(obj).then(function (res) {
+            // EthProxy.saveInfo(obj).then(function (res) {
+          EthProxy.processData(obj).then(function (res) {
                 console.log('Successfully saved: ' + res);
             }, function (err) {
                 console.log('Some error occured: ' + err);
