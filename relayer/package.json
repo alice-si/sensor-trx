@@ -1,0 +1,14 @@
+{
+  "name": "relayer",
+  "version": "1.0.0",
+  "description": "A service that listens to signed messages and relay them to the blockchain.",
+  "main": "telegram-checker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.30.0"
+  }
+}
