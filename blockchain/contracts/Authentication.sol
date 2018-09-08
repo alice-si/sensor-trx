@@ -1,11 +1,14 @@
 pragma solidity ^0.4.2;
 
 import 'openzeppelin-solidity/contracts/lifecycle/Destructible.sol';
+import './Project.sol';
 
 
 contract Authentication is Destructible {
   struct User {
     bytes32 name;
+    Project project;
+
   }
 
   mapping (address => User) private users;
@@ -33,6 +36,10 @@ contract Authentication is Destructible {
     return (users[msg.sender].name);
   }
 
+  function getProject() view public onlyExistingUser returns(address) {
+    return (users[msg.sender].project);
+  }
+
   function signup(bytes32 name)
   public
   payable
@@ -46,6 +53,7 @@ contract Authentication is Destructible {
     if (users[msg.sender].name == 0x0)
     {
         users[msg.sender].name = name;
+        users[msg.sender].project = new Project();
 
         return (users[msg.sender].name);
     }

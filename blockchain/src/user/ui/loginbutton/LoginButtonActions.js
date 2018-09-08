@@ -37,12 +37,15 @@ export function loginUser() {
           authenticationInstance = instance
 
           // Attempt to login user.
+          var user = {};
           authenticationInstance.login({from: coinbase})
           .then(function(result) {
             // If no error, login user.
-            var userName = web3.toUtf8(result)
-
-            dispatch(userLoggedIn({"name": userName}))
+            user.name = web3.toUtf8(result)
+            return authenticationInstance.getProject({from: coinbase});
+          }).then(function(result) {
+            user.project = result;
+            dispatch(userLoggedIn(user));
 
             // Used a manual redirect here as opposed to a wrapper.
             // This way, once logged in a user can still access the home page.
