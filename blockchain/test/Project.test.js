@@ -2,7 +2,35 @@ var SensorsManager = artifacts.require("SensorsManager");
 var ClaimsRegistry = artifacts.require("ClaimsRegistry");
 var Project = artifacts.require("Project");
 
+const ethUtil = require('ethereumjs-util');
+const web3Utils = require('web3-utils');
+
 require("./test-setup");
+
+function getHash(value, timestamp) {
+  return web3Utils.soliditySha3(
+    {
+      type: 'uint8',
+      value: value
+    },
+    {
+      type: 'uint256',
+      value: timestamp
+    }
+  );
+}
+
+getSignature = async function(value, timestamp, account) {
+  var hash = getHash(value, timestamp);
+  var signature = await web3.eth.sign(account, hash);
+
+  var signatureData = ethUtil.fromRpcSig(signature);
+  let v = ethUtil.bufferToHex(signatureData.v);
+  let r = ethUtil.bufferToHex(signatureData.r);
+  let s = ethUtil.bufferToHex(signatureData.s);
+
+  return [v, r, s];
+}
 
 contract('Project', function([owner, sensor1, sensor2, relay]) {
 
@@ -89,18 +117,30 @@ contract('Project', function([owner, sensor1, sensor2, relay]) {
 
 
   it("should not validate below minValue", async function() {
-    await project.validate(79, 1000, 0).shouldBeReverted();
+    var hash = getHash(79, 1000);
+    [v, r, s] = await getSignature(79, 1000, sensor1);
+
+    await project.validate(hash, v, r, s, 79, 1000, 0).shouldBeReverted();
   });
 
 
   it("should not validate below minTime", async function() {
-    await project.validate(80, 999, 0).shouldBeReverted();
+    var hash = getHash(80, 999);
+    [v, r, s] = await getSignature(80, 100, sensor1);
+
+    await project.validate(hash, v, r, s, 80, 999, 0).shouldBeReverted();
   });
+
 
 
   it("should validate with correct measurement", async function() {
     var before = web3.eth.getBalance(relay);
-    await project.validate(80, 1000, 0, {from: relay});
+
+    var hash = getHash(80, 1000);
+    [v, r, s] = await getSignature(80, 1000, sensor1);
+
+    await project.activateSensor(sensor1);
+    await project.validate(hash, v, r, s, 80, 1000, 0, {from: relay});
 
     [minValue, minTime, bounty, isValidated] = await claimsRegistry.getClaimDetailsAt(0);
 
@@ -109,9 +149,10 @@ contract('Project', function([owner, sensor1, sensor2, relay]) {
     after.should.be.bignumber.greaterThan(before);
   });
 
-
-  it("should not validate a validated claim", async function() {
-    await project.validate(80, 1000, 0).shouldBeReverted();
-  });
+  //
+  //
+  // it("should not validate a validated claim", async function() {
+  //   await project.validate(80, 1000, 0).shouldBeReverted();
+  // });
 
 });

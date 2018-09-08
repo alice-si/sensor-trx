@@ -4,18 +4,21 @@ import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import './SensorsManager.sol';
 import './ClaimsRegistry.sol';
+import './Verifier.sol';
 
 contract Project is Ownable {
     using SafeMath for uint256;
 
     SensorsManager public sensorsManager;
     ClaimsRegistry public claimsRegistry;
+    Verifier public verifier;
 
     uint256 reservedBounties;
 
     constructor() public {
         sensorsManager = new SensorsManager();
         claimsRegistry = new ClaimsRegistry();
+        verifier = new Verifier();
     }
 
     function addSensor(address _sensor) public onlyOwner {
@@ -38,9 +41,12 @@ contract Project is Ownable {
     }
 
 
-    function validate(uint8 _value, uint32 _time, uint256 _claimId) public {
-        //TODO: recover from the Verifier contract
-        address sensor = 0x0;
+    function validate(bytes32 msgHash, uint8 v, bytes32 r, bytes32 s, uint8 _value, uint32 _time, uint256 _claimId) public {
+        verifier.verifyHash(msgHash, _value, _time);
+
+        //verify the sensor
+        address sensor = verifier.recoverAddress(msgHash, v, r, s);
+        require(sensorsManager.isSensorActive(sensor));
 
         uint8 minValue;
         uint256 minTime;
