@@ -8,10 +8,10 @@ contract Authentication is Destructible {
   struct User {
     bytes32 name;
     Project project;
-
   }
 
   mapping (address => User) private users;
+  Project[] projects;
 
   uint private id; // Stores user id temporarily
 
@@ -53,7 +53,10 @@ contract Authentication is Destructible {
     if (users[msg.sender].name == 0x0)
     {
         users[msg.sender].name = name;
-        users[msg.sender].project = new Project();
+        Project project = new Project();
+        users[msg.sender].project = project;
+        projects.push(project);
+        project.transferOwnership(msg.sender);
 
         return (users[msg.sender].name);
     }
@@ -76,4 +79,13 @@ contract Authentication is Destructible {
         return (users[msg.sender].name);
     }
   }
+
+  function getProjectsCount() public view returns(uint256) {
+    return projects.length;
+  }
+
+  function getProjectAt(uint256 _index) public view returns(address) {
+    return projects[_index];
+  }
+
 }
