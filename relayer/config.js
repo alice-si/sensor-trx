@@ -9,6 +9,10 @@ Config.channelTitle = 'SensorTRXChannel';
 
 Config.authenticationContractAddress = "0x0df917f7c071ddb7f64377829c8e24881a7f49d5";
 
+// for kovan test network
+// Config.mainAccount = '0x762d6a4905bb7d963ebd05d26df21ba180fe1d0a';
+// Config.mainPassword = 'testpass';
+
 Config.mainAccount = '0x85aebd01c13960e6315c2d03caffdbafe66d0f6a';
 Config.mainPassword = 'testpass';
 
