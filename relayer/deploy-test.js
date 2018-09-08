@@ -8,6 +8,10 @@ const web3 = new Web3();
 web3.setProvider(provider);
 
 async function testDeployment() {
+  // unlock mainAccount
+  await Promise.promisify(web3.personal.unlockAccount)(Config.mainAccount, Config.mainPassword);
+
+
   const Project = loadContract('Project');
   // console.log(Project);
   const Authentication = loadContract('Authentication');
