@@ -11,17 +11,27 @@ bot.on('channel_post', (msg) => {
         const data = msg.text;
         if (checkMessage(data)) {
             console.log('Saving data in blockchain...');
-            EthProxy.saveInfo(data);
+            let obj = JSON.parse(data);
+            EthProxy.saveInfo(obj).then(function (res) {
+                console.log('Successfully saved: ' + res);
+            }, function (err) {
+                console.log('Some error occured: ' + err);
+            });
         } else {
-            console.log('Data was not correctly signed: ' + data);
+            console.log('Data was not correct :( Skipping... ' + data);
         }
     }
 });
 
 function checkMessage(data) {
-    // This function will check if data is signed correctly
-    // and will filter potential error messages (not signed transactions for example - but simple message)
-    return true;
+    try {
+        let obj = JSON.parse(data);
+        console.log(obj);
+        return Boolean(obj.quality && obj.time);
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
 }
 
 
