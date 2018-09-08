@@ -4,7 +4,7 @@ var Project = artifacts.require("Project");
 
 require("./test-setup");
 
-contract('Project', function([owner, sensor1, sensor2, other]) {
+contract('Project', function([owner, sensor1, sensor2, relay]) {
 
   var project, sensorsManager, claimsRegistry;
 
@@ -64,14 +64,26 @@ contract('Project', function([owner, sensor1, sensor2, other]) {
   });
 
 
+  it("should not allow adding claim without a proper balance", async function() {
+    await claimsRegistry.addClaim(80, 1000, web3.toWei(0.01, 'ether')).shouldBeReverted();
+  });
+
+
+  it("should load the project contract", async function() {
+    await web3.eth.sendTransaction({from: owner, to: project.address, value: web3.toWei(0.01, 'ether')});
+
+    web3.eth.getBalance(project.address).should.be.bignumber.equal(web3.toWei(0.01, 'ether'));
+  });
+
   it("should add a claim", async function() {
-    await project.addClaim(80, 1000);
+    await project.addClaim(80, 1000, web3.toWei(0.01, 'ether'));
 
     (await claimsRegistry.getClaimsCount()).should.be.bignumber.equal(1);
-    [minValue, minTime, isValidated] = await claimsRegistry.getClaimDetailsAt(0);
+    [minValue, minTime, bounty, isValidated] = await claimsRegistry.getClaimDetailsAt(0);
 
     minValue.should.be.bignumber.equal(80);
     minTime.should.be.bignumber.equal(1000);
+    bounty.should.be.bignumber.equal(web3.toWei(0.01, 'ether'));
     isValidated.should.be.false;
   });
 
@@ -87,11 +99,14 @@ contract('Project', function([owner, sensor1, sensor2, other]) {
 
 
   it("should validate with correct measurement", async function() {
-    await project.validate(80, 1000, 0);
+    var before = web3.eth.getBalance(relay);
+    await project.validate(80, 1000, 0, {from: relay});
 
-    [minValue, minTime, isValidated] = await claimsRegistry.getClaimDetailsAt(0);
+    [minValue, minTime, bounty, isValidated] = await claimsRegistry.getClaimDetailsAt(0);
 
     isValidated.should.be.true;
+    var after = web3.eth.getBalance(relay);
+    after.should.be.bignumber.greaterThan(before);
   });
 
 

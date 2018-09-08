@@ -1,13 +1,17 @@
 pragma solidity ^0.4.24;
 
 import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
+import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import './SensorsManager.sol';
 import './ClaimsRegistry.sol';
 
 contract Project is Ownable {
+    using SafeMath for uint256;
 
     SensorsManager public sensorsManager;
     ClaimsRegistry public claimsRegistry;
+
+    uint256 reservedBounties;
 
     constructor() public {
         sensorsManager = new SensorsManager();
@@ -27,8 +31,10 @@ contract Project is Ownable {
     }
 
 
-    function addClaim(uint8 _minValue, uint256 _minTime) public onlyOwner {
-        claimsRegistry.addClaim(_minValue, _minTime);
+    function addClaim(uint8 _minValue, uint256 _minTime, uint256 _bounty) public onlyOwner {
+        require(address(this).balance.sub(reservedBounties) >= _bounty );
+        claimsRegistry.addClaim(_minValue, _minTime, _bounty);
+        reservedBounties = reservedBounties.add(_bounty);
     }
 
 
@@ -38,14 +44,19 @@ contract Project is Ownable {
 
         uint8 minValue;
         uint256 minTime;
+        uint256 bounty;
         bool isValidated;
-        (minValue, minTime, isValidated) = claimsRegistry.getClaimDetailsAt(_claimId);
+        (minValue, minTime, bounty, isValidated) = claimsRegistry.getClaimDetailsAt(_claimId);
 
         require(_value >= minValue);
         require(_time >= minTime);
         require(!isValidated);
 
         claimsRegistry.validateClaim(_claimId, sensor);
+        reservedBounties = reservedBounties.sub(bounty);
+        msg.sender.transfer(bounty);
     }
+
+    function () payable {}
 
 }

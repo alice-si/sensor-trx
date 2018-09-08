@@ -45,6 +45,8 @@ export function loginUser() {
             return authenticationInstance.getProject({from: coinbase});
           }).then(function(result) {
             user.project = result;
+
+
             dispatch(userLoggedIn(user));
 
             // Used a manual redirect here as opposed to a wrapper.

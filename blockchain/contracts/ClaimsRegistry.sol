@@ -11,14 +11,15 @@ contract ClaimsRegistry is Ownable {
     struct Claim {
         uint8 minValue;
         uint256 minTime;
+        uint256 bounty;
         bool isValidated;
     }
 
     Claim[] claims;
 
 
-    function addClaim(uint8 _minValue, uint256 _minTime) public onlyOwner {
-        claims.push(Claim(_minValue, _minTime, false));
+    function addClaim(uint8 _minValue, uint256 _minTime, uint256 bounty) public onlyOwner {
+        claims.push(Claim(_minValue, _minTime, bounty, false));
         emit ClaimAdded(claims.length -1, _minValue, _minTime);
     }
 
@@ -31,8 +32,8 @@ contract ClaimsRegistry is Ownable {
         return claims.length;
     }
 
-    function getClaimDetailsAt(uint256 _index) public view returns(uint8, uint256, bool) {
-        return (claims[_index].minValue, claims[_index].minTime, claims[_index].isValidated);
+    function getClaimDetailsAt(uint256 _index) public view returns(uint8, uint256, uint256, bool) {
+        return (claims[_index].minValue, claims[_index].minTime, claims[_index].bounty, claims[_index].isValidated);
     }
 
 }
