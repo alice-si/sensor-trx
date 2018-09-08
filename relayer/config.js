@@ -5,6 +5,6 @@ Config.chatId = '-1001341088791';
 Config.channelTitle = 'SensorTRXChannel';
 
 // TODO change it to deployed projectContract Address
-Config.projectContractAddress = "0x0";
+Config.projectContractAddress = "0x47efca1b7903ea865e7638810fc4439759cfd52f";
 
 module.exports = Config;
