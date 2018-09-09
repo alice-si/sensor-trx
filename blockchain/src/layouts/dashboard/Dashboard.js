@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import AddSensorModal from './AddSensorModal'
 import AddClaimModal from './AddClaimModal'
 
 import { withStyles } from '@material-ui/core/styles';
@@ -9,17 +8,16 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Chip from '@material-ui/core/Chip';
+import CheckCircle from '@material-ui/icons/CheckCircle';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import WifiTethering from '@material-ui/icons/WifiTethering';
 import Assignment from '@material-ui/icons/Assignment';
-
+import SensorsContainer from '../../user/ui/sensors/SensorsContainer';
 
 const styles = theme => ({
   root: {
@@ -40,6 +38,22 @@ const styles = theme => ({
     right: -theme.spacing.unit * 2,
     bottom: -theme.spacing.unit * 2,
   },
+  colorBar: {},
+  colorChecked: {},
+  colorSwitchBase: {
+    color: '#aaa',
+    '&$colorChecked': {
+      color: '#72CC71',
+      '& + $colorBar': {
+        backgroundColor: '#72CC71',
+      },
+    },
+  },
+  chip: {
+    verified: {
+      backgroundColor: '#72CC71'
+    }
+  }
 })
 
 function generate(element) {
@@ -54,14 +68,9 @@ class Dashboard extends Component {
   state = {
     dense: false,
     secondary: false,
-    addSensorModalOpen: false,
     addClaimModalOpen: false,
   }
   authData = this.props
-
-  handleCloseSensorModal = () => {
-    this.setState({ addSensorModalOpen: false })
-  }
 
   handleCloseClaimModal = () => {
     this.setState({ addClaimModalOpen: false })
@@ -73,41 +82,7 @@ class Dashboard extends Component {
     return(
       <Grid container spacing={40}>
         <Grid item xs={6}>
-          <Paper className={classes.paper} elevation={1}>
-            <Typography variant="headline" gutterBottom>
-              Sensors
-            </Typography>
-            <Tooltip title="Add">
-              <Button className={classes.absolute}
-                      variant="fab"
-                      color="primary"
-                      aria-label="Add"
-                      onClick={() => { this.setState({ addSensorModalOpen: !this.state.addSensorModalOpen }) } }
-              >
-                <AddIcon />
-              </Button>
-            </Tooltip>
-            <List dense={dense}>
-              {generate(
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <WifiTethering />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Single-line item"
-                    secondary={secondary ? 'Secondary text' : null}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton aria-label="Delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>,
-              )}
-            </List>
-          </Paper>
+          <SensorsContainer />
         </Grid>
         <Grid item xs={6}>
           <Paper className={classes.paper} elevation={1}>
@@ -137,16 +112,14 @@ class Dashboard extends Component {
                     secondary={secondary ? 'Secondary text' : null}
                   />
                   <ListItemSecondaryAction>
-                    <IconButton aria-label="Delete">
-                      <DeleteIcon />
-                    </IconButton>
+                    {/*<Chip color="primary" variant="outlined" label="Not Verified" />*/}
+                    <Chip color="primary" avatar={<Avatar><CheckCircle color="inherit" /></Avatar>} label="Verified" />
                   </ListItemSecondaryAction>
                 </ListItem>,
               )}
             </List>
           </Paper>
         </Grid>
-        <AddSensorModal open={this.state.addSensorModalOpen} onClose={this.handleCloseSensorModal} />
         <AddClaimModal open={this.state.addClaimModalOpen} onClose={this.handleCloseClaimModal} />
       </Grid>
     )

@@ -3,18 +3,27 @@ import ProjectContract from '../../../../build/contracts/Project.json'
 
 const contract = require('truffle-contract')
 
-// TODO: take user input instead of hardcoded sensor address
-const SENSOR_ADDR = '0x7064344afee2040582Be96fF8FeA2c56134A4493'
+// TODO: take user input instead of hardcoded params
+const SENSOR_ADDR = '0xEA8B4a31ac56b43fE98ad35218f5D33e6e3752CA'
 
-export const SENSOR_ADDED = 'SENSOR_ADDED'
-function sensorAdded(result) {
+export const SENSOR_DEACTIVATED = 'SENSOR_DEACTIVATED'
+function sensorDeactivated(result) {
   return {
-    type: SENSOR_ADDED,
+    type: SENSOR_DEACTIVATED,
     payload: result
   }
 }
 
-export function addSensor() {
+export const SENSOR_ACTIVATED = 'SENSOR_ACTIVATED'
+function sensorActivated(result) {
+  return {
+    type: SENSOR_ACTIVATED,
+    payload: result
+  }
+}
+
+
+export function deactivateSensor() {
   let web3 = store.getState().web3.web3Instance
   let projectAddress = store.getState().user.data.project
 
@@ -38,14 +47,14 @@ export function addSensor() {
           console.error(error);
         }
 
-      // Attempt to add a sensor.
-      projectInstance.addSensor(SENSOR_ADDR, {from: coinbase})
+      // Attempt to deactivate sensor.
+      projectInstance.deactivateSensor(SENSOR_ADDR, {from: coinbase})
         .then(function(result) {
-          console.log('addSensor result', result)
-          dispatch(sensorAdded(result))
+          console.log('deactivateSensor result', result)
+          dispatch(sensorDeactivated(result))
         })
         .catch(function(result) {
-          console.error('Sensor was not added: ', result)
+          console.error('deactivateSensor threw an error: ', result)
         })
       })
     }
@@ -54,7 +63,7 @@ export function addSensor() {
   }
 }
 
-export function removeSensor() {
+export function activateSensor() {
   let web3 = store.getState().web3.web3Instance
   let projectAddress = store.getState().user.data.project
 
@@ -78,14 +87,14 @@ export function removeSensor() {
           console.error(error);
         }
 
-      // Attempt to add a sensor.
-      projectInstance.removeSensor(SENSOR_ADDR, {from: coinbase})
+      // Attempt to activate sensor.
+      projectInstance.activateSensor(SENSOR_ADDR, {from: coinbase})
         .then(function(result) {
-          console.log('addSensor result', result)
-          dispatch(sensorAdded(result))
+          console.log('activateSensor result', result)
+          dispatch(sensorActivated(result))
         })
         .catch(function(result) {
-          console.error('Sensor was not added: ', result)
+          console.error('activateSensor threw an error: ', result)
         })
       })
     }

@@ -6,12 +6,14 @@ contract SensorsManager is Ownable {
 
     event SensorActivated(address indexed sensorAddress);
     event SensorDeactivated(address indexed sensorAddress);
+    event SensorAdded(address indexed sensorAddress);
 
     mapping(address => bool) private activeSensors;
     address[] public sensors;
 
     function addSensor(address _sensor) public onlyOwner {
         sensors.push(_sensor);
+        emit SensorAdded(_sensor);
     }
 
     function activateSensor(address _sensor) public onlyOwner {

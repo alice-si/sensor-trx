@@ -4,9 +4,11 @@ import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+
+import AddClaimButtonContainer from '../../user/ui/addclaimbutton/AddClaimButtonContainer'
+
 
 const styles = theme => ({
   paper: {
@@ -66,9 +68,7 @@ class SimpleClaimModal extends React.Component {
                 />
               </CardContent>
               <CardActions className={classes.actions}>
-                <Button className={classes.addButton} variant="contained" color="primary">
-                  Add Claim
-                </Button>
+                <AddClaimButtonContainer />
               </CardActions>
             </div>
           </Modal>

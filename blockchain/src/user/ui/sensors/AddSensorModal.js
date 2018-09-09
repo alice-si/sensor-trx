@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
-import AddSensorButtonContainer from '../../user/ui/addsensorbutton/AddSensorButtonContainer'
+import AddSensorButtonContainer from '../addsensorbutton/AddSensorButtonContainer'
 
 const styles = theme => ({
   paper: {
@@ -65,7 +65,7 @@ class SimpleModal extends React.Component {
                 />
               </CardContent>
               <CardActions className={classes.actions}>
-                <AddSensorButtonContainer />
+                <AddSensorButtonContainer onClick={this.handleClose} />
               </CardActions>
             </div>
           </Modal>
