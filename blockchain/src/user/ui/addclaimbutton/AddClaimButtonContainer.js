@@ -10,7 +10,7 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onAddClaimClick: (event) => {
       event.preventDefault();
-      dispatch(addClaim())
+      dispatch(addClaim(props.ppm, props.scheduledOn, props.bounty))
       props.onClick()
     }
   }

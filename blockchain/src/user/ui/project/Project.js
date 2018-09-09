@@ -47,15 +47,16 @@ class Project extends Component {
             </Typography>
           </Grid>
           <Grid item xs={2} />
-          <Grid item xs={4}>
-            Balance: {project.balance} ETH
+          <Grid item xs={2} />
+          <Grid item xs={2}>
+            <Typography gutterBottom>Allocated: Ξ {project.balance}</Typography>
             <Tooltip title="Add">
               <Button color="primary"
                       variant="contained"
-                      aria-label="Fund Project"
+                      aria-label="Add Funds"
                       onClick={() => { this.setState({ fundProjectModalOpen: !this.state.fundProjectModalOpen }) } }
               >
-                Fund Project
+                Add Funds
               </Button>
             </Tooltip>
           </Grid>
