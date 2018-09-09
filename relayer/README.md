@@ -1,1 +1,1 @@
-A service that listens to signed messages and relay them to the blockchain.
+A service that listens to signed messages and relays them to the blockchain.
