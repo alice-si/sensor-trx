@@ -30,6 +30,13 @@ const styles = theme => ({
 class SimpleModal extends React.Component {
   state = {
     open: this.props.open,
+    address: ''
+  };
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
   };
 
   handleClose = () => {
@@ -37,6 +44,7 @@ class SimpleModal extends React.Component {
   };
 
   render() {
+    const { address } = this.state;
     const { classes } = this.props;
 
     return (
@@ -57,15 +65,16 @@ class SimpleModal extends React.Component {
                   Enter the public address associated with the sensor.
                 </Typography>
                 <TextField
-                  id="uncontrolled"
+                  required
                   label="Sensor Public Address"
-                  defaultValue=""
                   className={classes.textField}
                   margin="normal"
+                  value={address}
+                  onChange={this.handleChange('address')}
                 />
               </CardContent>
               <CardActions className={classes.actions}>
-                <AddSensorButtonContainer onClick={this.handleClose} />
+                <AddSensorButtonContainer onClick={this.handleClose} address={address}/>
               </CardActions>
             </div>
           </Modal>
