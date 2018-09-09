@@ -5,6 +5,7 @@ const contract = require('truffle-contract')
 // TODO: take user input instead of hardcoded params
 const CLAIM_MIN_VALUE = 10
 const CLAIM_MIN_TIME = 20
+const CLAIM_BOUNTY = 0
 
 export const CLAIM_ADDED = 'CLAIM_ADDED'
 function claimAdded(result) {
@@ -39,7 +40,7 @@ export function addClaim() {
         }
 
       // Attempt to add a claim.
-      projectInstance.addClaim(CLAIM_MIN_VALUE, CLAIM_MIN_TIME, {from: coinbase})
+      projectInstance.addClaim(CLAIM_MIN_VALUE, CLAIM_MIN_TIME, CLAIM_BOUNTY, {from: coinbase})
         .then(function(result) {
           console.log('addClaim result', result)
           dispatch(claimAdded(result))
