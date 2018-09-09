@@ -41,7 +41,7 @@ contract Project is Ownable {
     }
 
 
-    function validate(bytes32 msgHash, uint8 v, bytes32 r, bytes32 s, uint8 _value, uint32 _time, uint256 _claimId) public {
+    function validate(bytes32 msgHash, uint8 v, bytes32 r, bytes32 s, uint8 _value, uint256 _time, uint256 _claimId) public {
         require(verifier.verifyHash(msgHash, _value, _time));
 
         //verify the sensor
