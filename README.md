@@ -26,3 +26,5 @@ Verifier contract: verifies the signature of whitelisted sensors
 Claims registry contract: records the claims made by charities (in this implementation)  
 
 DEPLOYMENT
+
+```npm install```
