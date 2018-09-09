@@ -83,7 +83,6 @@ contract('Verifier', function([owner, signer]) {
 
     console.log("-------------- ECSIGN -------------");
 
-    ethUtil.privateToPublic(privkey).toString('hex');
     console.log("Message: " + hash);
     console.log("V: " + ethUtil.bufferToHex(vrs.v));
     console.log("R: " + ethUtil.bufferToHex(vrs.r));
