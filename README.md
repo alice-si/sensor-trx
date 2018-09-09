@@ -1,6 +1,7 @@
 OVERVIEW
 
 SensorTRX is a lightweight protocol for sensor oracles.
+
 It avoids the hassle of having to create and manage ethereum accounts for each sensor in a project.
 It also avoids having sensors manage private keys and connecting directly to the blockchain, so that if they are lost or damaged, no Eth is lost.
 
