@@ -5,6 +5,8 @@ const Authentication = ContractUtils.loadContract('Authentication');
 const Project = ContractUtils.loadContract('Project');
 
 ContractUtils.unlockMain().then(() => {
+  console.log("Main account unlocked");
+
   let authentication = Authentication.at(Config.authenticationContractAddress);
   return authentication.getProjectAt(0, ContractUtils.getConf()).then(projectAddr => {
     console.log('Project was found: ' + projectAddr);

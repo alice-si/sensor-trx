@@ -4,6 +4,8 @@ const Config = require('../config');
 const Authentication = ContractUtils.loadContract('Authentication');
 
 ContractUtils.unlockMain().then(() => {
+  console.log("Main account unlocked");
+
   let user = generateName();
   console.log('Signup for user: ' + user);
   let authentication = Authentication.at(Config.authenticationContractAddress);
