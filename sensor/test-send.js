@@ -3,7 +3,9 @@ const Web3Utils = require('web3-utils');
 const Config = require('./config');
 const ethUtil = require('ethereumjs-util');
 
-run();
+const frequency = 15; // seconds
+
+setInterval(run, frequency * 1000);
 
 function run() {
   const TIME = getTimestamp();
@@ -22,7 +24,7 @@ function run() {
 
   const signedData = getSignedData(VALUE, TIME);
 
-  const messageJSON = JSON.stringify(signedData);
+  let messageJSON = JSON.stringify(signedData);
   console.log('Sending following message into Telegram channel:');
   console.log(messageJSON);
 
