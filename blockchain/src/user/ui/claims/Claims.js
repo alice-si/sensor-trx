@@ -65,7 +65,7 @@ class Claims extends Component {
               <Claim
                 key={index}
                 minValue={claim.minValue}
-                minTime={claim.minTime}
+                scheduledOn={claim.scheduledOn}
                 bounty={claim.bounty}
                 isVerified={claim.isVerified}
               />

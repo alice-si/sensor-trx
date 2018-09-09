@@ -33,6 +33,15 @@ const styles = theme => ({
 class SimpleClaimModal extends React.Component {
   state = {
     open: this.props.open,
+    ppm: 60,
+    bounty: .1,
+    date: '2018-10-01',
+  };
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
   };
 
   handleClose = () => {
@@ -40,6 +49,7 @@ class SimpleClaimModal extends React.Component {
   };
 
   render() {
+    const { ppm, bounty, date } = this.state;
     const { classes } = this.props;
 
     return (
@@ -60,15 +70,32 @@ class SimpleClaimModal extends React.Component {
                   Enter the sensor measurement for the claim.
                 </Typography>
                 <TextField
-                  id="uncontrolled"
                   label="Air Quality Limit (ppm)"
-                  defaultValue=""
+                  value={ppm}
                   className={classes.textField}
                   margin="normal"
+                  onChange={this.handleChange('ppm')}
+                />
+                <TextField
+                  label="Bounty (ETH)"
+                  value={bounty}
+                  className={classes.textField}
+                  margin="normal"
+                  onChange={this.handleChange('bounty')}
+                />
+                <TextField
+                  id="date"
+                  label="Scheduled for"
+                  type="date"
+                  value={date}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={this.handleChange('date')}
                 />
               </CardContent>
               <CardActions className={classes.actions}>
-                <AddClaimButtonContainer onClick={this.handleClose} />
+                <AddClaimButtonContainer onClick={this.handleClose} ppm={ppm} bounty={bounty} scheduledOn={date} />
               </CardActions>
             </div>
           </Modal>

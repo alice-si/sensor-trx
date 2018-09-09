@@ -48,8 +48,8 @@ export function fetchClaims() {
                   console.log(`claim at ${index}`, claimDetails)
                   claims.push({
                     minValue: claimDetails[0].toNumber(),
-                    minTime: claimDetails[1].toNumber(),
-                    bounty: claimDetails[2].toNumber(),
+                    scheduledOn: new Date(claimDetails[1].toNumber()).toLocaleDateString(),
+                    bounty: web3.fromWei(claimDetails[2].toNumber(), 'ether'),
                     isVerified: claimDetails[3],
                   })
                   dispatch(claimsReceived(claims))

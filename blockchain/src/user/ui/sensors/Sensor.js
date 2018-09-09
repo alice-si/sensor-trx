@@ -21,7 +21,7 @@ class Sensor extends Component {
     let { address, isActive } = this.props
 
     return(
-      <ListItem>
+      <ListItem disableGutters>
         <ListItemAvatar>
           <Avatar>
             <WifiTethering />

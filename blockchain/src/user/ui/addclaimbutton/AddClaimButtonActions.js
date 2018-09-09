@@ -2,10 +2,6 @@ import store from '../../../store'
 import ProjectContract from '../../../../build/contracts/Project.json'
 const contract = require('truffle-contract')
 
-// TODO: take user input instead of hardcoded params
-const CLAIM_MIN_VALUE = 10
-const CLAIM_MIN_TIME = 20
-const CLAIM_BOUNTY = 0
 
 export const CLAIM_ADDED = 'CLAIM_ADDED'
 function claimAdded(result) {
@@ -15,7 +11,7 @@ function claimAdded(result) {
   }
 }
 
-export function addClaim() {
+export function addClaim(ppm, scheduledOn, bounty) {
   let web3 = store.getState().web3.web3Instance
   let projectAddress = store.getState().user.data.project
 
@@ -39,16 +35,19 @@ export function addClaim() {
           console.error(error);
         }
 
-      // Attempt to add a claim.
-      projectInstance.addClaim(CLAIM_MIN_VALUE, CLAIM_MIN_TIME, CLAIM_BOUNTY, {from: coinbase})
-        .then(function(result) {
-          console.log('addClaim result', result)
-          dispatch(claimAdded(result))
+        // Attempt to add a claim.
+        let bountyInWei = web3.toWei(bounty, 'ether')
+        let scheduledTime = Date.parse(scheduledOn)
+        console.log(scheduledTime)
+        projectInstance.addClaim(ppm, scheduledTime, bountyInWei, {from: coinbase})
+          .then(function(result) {
+            console.log('addClaim result', result)
+            dispatch(claimAdded(result))
+          })
+          .catch(function(result) {
+            console.error('Claim was not added: ', result)
+          })
         })
-        .catch(function(result) {
-          console.error('Claim was not added: ', result)
-        })
-      })
     }
   } else {
     console.error('Web3 is not initialized.');
