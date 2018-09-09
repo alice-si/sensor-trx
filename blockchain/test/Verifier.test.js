@@ -1,15 +1,15 @@
-var Validator = artifacts.require("Validator");
+var Verifier = artifacts.require("Verifier");
 const ethUtil = require('ethereumjs-util');
 const web3Utils = require('web3-utils');
 
 require("./test-setup");
 
-contract('Validator', function([owner, signer]) {
+contract('Verifier', function([owner, signer]) {
 
-  var validator;
+  var verifier;
 
   before(async function() {
-    validator = await Validator.new()
+    verifier = await Verifier.new()
   });
 
 
@@ -33,7 +33,7 @@ contract('Validator', function([owner, signer]) {
     let s = ethUtil.bufferToHex(signatureData.s);
 
 
-    const recoveredAddress = await validator.recoverAddress(message, v, r, s);
+    const recoveredAddress = await verifier.recoverAddress(message, v, r, s);
     recoveredAddress.should.be.equal(signer, 'The recovered address should match the signing address')
   });
 
@@ -50,7 +50,7 @@ contract('Validator', function([owner, signer]) {
       }
     );
 
-    (await validator.verifyHash(hash, 100, 1000)).should.be.true;
+    (await verifier.verifyHash(hash, 100, 1000)).should.be.true;
   });
 
 });
