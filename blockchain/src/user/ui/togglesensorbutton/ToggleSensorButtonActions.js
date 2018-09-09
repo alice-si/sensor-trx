@@ -3,9 +3,6 @@ import ProjectContract from '../../../../build/contracts/Project.json'
 
 const contract = require('truffle-contract')
 
-// TODO: take user input instead of hardcoded params
-const SENSOR_ADDR = '0xEA8B4a31ac56b43fE98ad35218f5D33e6e3752CA'
-
 export const SENSOR_DEACTIVATED = 'SENSOR_DEACTIVATED'
 function sensorDeactivated(result) {
   return {
@@ -23,7 +20,7 @@ function sensorActivated(result) {
 }
 
 
-export function deactivateSensor() {
+export function deactivateSensor(sensorAddress) {
   let web3 = store.getState().web3.web3Instance
   let projectAddress = store.getState().user.data.project
 
@@ -48,7 +45,7 @@ export function deactivateSensor() {
         }
 
       // Attempt to deactivate sensor.
-      projectInstance.deactivateSensor(SENSOR_ADDR, {from: coinbase})
+      projectInstance.deactivateSensor(sensorAddress, {from: coinbase})
         .then(function(result) {
           console.log('deactivateSensor result', result)
           dispatch(sensorDeactivated(result))
@@ -63,7 +60,7 @@ export function deactivateSensor() {
   }
 }
 
-export function activateSensor() {
+export function activateSensor(sensorAddress) {
   let web3 = store.getState().web3.web3Instance
   let projectAddress = store.getState().user.data.project
 
@@ -88,7 +85,7 @@ export function activateSensor() {
         }
 
       // Attempt to activate sensor.
-      projectInstance.activateSensor(SENSOR_ADDR, {from: coinbase})
+      projectInstance.activateSensor(sensorAddress, {from: coinbase})
         .then(function(result) {
           console.log('activateSensor result', result)
           dispatch(sensorActivated(result))
