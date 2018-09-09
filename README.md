@@ -24,9 +24,3 @@ Project contract: this is the main interface for the SensorTRX protocol, allowin
 Sensor management contract: allows the project manager to create authorised sensors (whitelist) and activate or deactivate them (in case they become unresponsive)  
 Verifier contract: verifies the signature of whitelisted sensors  
 Claims registry contract: records the claims made by charities (in this implementation)  
-
-DEPLOYMENT
-
-```npm install
-node test-send.js
-```
