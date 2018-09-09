@@ -29,7 +29,7 @@ function checkMessage(data) {
     try {
         let obj = JSON.parse(data);
         console.log(obj);
-        return Boolean(obj.quality && obj.time);
+        return Boolean(obj.value && obj.time && obj.msgHash && obj.v && obj.r && obj.s); // Kinf of checking if fields exist and are not empty
     } catch (err) {
         console.log(err);
         return false;

@@ -43,7 +43,7 @@ EthProxy.processData = async function (data) {
             console.log('Fit to claim');
             console.log(claimDetails);
             await Promise.promisify(web3.personal.unlockAccount)(Config.mainAccount, Config.mainPassword);
-            let result = await project.validate(data.quality, data.time, claimNumber, config);
+            let result = await project.validate(data.msgHash, data.v, data.r, data.s, data.value, data.time, claimNumber, config);
             return result;
           } else {
             console.log('Does not fit to claim');
@@ -54,21 +54,6 @@ EthProxy.processData = async function (data) {
     console.log("There were nothing fitted for saving to blockchain :(");
     return "Nothing";
 };
-
-
-// TODO remove this commented function
-// EthProxy.saveInfo = function (data) {
-//     console.log('Starting sending data to blockchain...: ' + JSON.stringify(data));
-//     const Project = loadContract('Project');
-//
-//     // TODO clean logging later
-//     console.log(Project);
-//     console.log('Getting project at ' + Config.projectContractAddress);
-//     let project = Project.at(Config.projectContractAddress);
-//
-//     console.log('Trying to validate on project');
-//     return project.validate(data.quality, data.time);
-// };
 
 function loadContract(contractName) {
     // TODO clean logging later
@@ -96,7 +81,7 @@ function fitToClaim(claimDetails, data) {
   let claimBounty = claimDetails[2].toNumber(); // maybe will be used later
   console.log('Comparing ');
   console.log([claimMinVal, claimMinTime, claimDisabled]);
-  return !claimDisabled && data.time >= claimMinTime && data.quality >= claimMinVal;
+  return !claimDisabled && data.time >= claimMinTime && data.value >= claimMinVal;
 }
 
 module.exports = EthProxy;
