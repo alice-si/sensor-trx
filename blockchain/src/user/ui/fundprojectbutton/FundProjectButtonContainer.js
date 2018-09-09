@@ -10,7 +10,7 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onFundProjectClick: (event) => {
       event.preventDefault();
-      dispatch(addFunds())
+      dispatch(addFunds(props.amount))
       props.onClick()
     }
   }

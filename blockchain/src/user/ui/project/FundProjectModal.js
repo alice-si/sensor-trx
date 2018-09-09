@@ -33,13 +33,21 @@ const styles = theme => ({
 class SimpleClaimModal extends React.Component {
   state = {
     open: this.props.open,
+    amount: 1
   };
 
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+  
   handleClose = () => {
     this.props.onClose()
   };
 
   render() {
+    const { amount } = this.state;
     const { classes } = this.props;
 
     return (
@@ -62,13 +70,14 @@ class SimpleClaimModal extends React.Component {
                 <TextField
                   id="uncontrolled"
                   label="Bounty Amount (ETH)"
-                  defaultValue=""
+                  value={amount}
                   className={classes.textField}
                   margin="normal"
+                  onChange={this.handleChange('amount')}
                 />
               </CardContent>
               <CardActions className={classes.actions}>
-                <FundProjectButtonContainer onClick={this.handleClose} />
+                <FundProjectButtonContainer onClick={this.handleClose} amount={amount} />
               </CardActions>
             </div>
           </Modal>
