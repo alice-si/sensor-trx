@@ -27,4 +27,6 @@ Claims registry contract: records the claims made by charities (in this implemen
 
 DEPLOYMENT
 
-```npm install```
+```npm install
+node test-send.js
+```
