@@ -18,7 +18,7 @@ class SignUpForm extends Component {
 
     if (this.state.name.length < 2)
     {
-      return alert('Please fill in your name.')
+      return alert('Please fill in your project name.')
     }
 
     this.props.onSignUpFormSubmit(this.state.name)
@@ -28,8 +28,8 @@ class SignUpForm extends Component {
     return(
       <form className="pure-form pure-form-stacked" onSubmit={this.handleSubmit.bind(this)}>
         <fieldset>
-          <label htmlFor="name">Name</label>
-          <input id="name" type="text" value={this.state.name} onChange={this.onInputChange.bind(this)} placeholder="Name" />
+          <label htmlFor="name">Project Name</label>
+          <input id="name" type="text" value={this.state.name} onChange={this.onInputChange.bind(this)} placeholder="Project Name" />
           <span className="pure-form-message">This is a required field.</span>
 
           <br />
