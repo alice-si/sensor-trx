@@ -34,6 +34,7 @@ contract('Verifier', function([owner, signer]) {
     let s = ethUtil.bufferToHex(signatureData.s);
 
     console.log("-------------- WEB3 SIGN -------------");
+    console.log("Message: " + message);
     console.log("V: " + v);
     console.log("R: " + r);
     console.log("S: " + s);
@@ -83,9 +84,11 @@ contract('Verifier', function([owner, signer]) {
     console.log("-------------- ECSIGN -------------");
 
     ethUtil.privateToPublic(privkey).toString('hex');
+    console.log("Message: " + hash);
     console.log("V: " + ethUtil.bufferToHex(vrs.v));
     console.log("R: " + ethUtil.bufferToHex(vrs.r));
     console.log("S: " + ethUtil.bufferToHex(vrs.s));
+    console.log("Signer: " + ethUtil.privateToAddress(privkey).toString('hex'));
 
 
     var pubkey = ethUtil.ecrecover(data, vrs.v, vrs.r, vrs.s);
