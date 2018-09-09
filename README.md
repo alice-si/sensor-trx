@@ -1,3 +1,9 @@
+INTRO
+
+SensorTRX is a project that was hacked during EthBerlin 2018.  
+A presentation of the project can be found here: https://tinyurl.com/y7dufof3  
+A demo of the project can be found here: http://sensor-trx.alice.si/  
+
 OVERVIEW
 
 SensorTRX is a lightweight protocol for sensor oracles.  
