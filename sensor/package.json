@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ethereumjs-util": "^5.2.0",
     "node-telegram-bot-api": "^0.30.0",
-    "telegraf": "^3.23.0"
+    "telegraf": "^3.23.0",
+    "web3-utils": "^1.0.0-beta.36"
   }
 }
