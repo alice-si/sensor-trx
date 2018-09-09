@@ -1,8 +1,5 @@
 import store from '../../../store'
 
-// TODO: take user input instead of hardcoded params
-const FUNDS_TO_ADD = 10
-
 export const FUNDS_ADDED = 'FUNDS_ADDED'
 function fundsAdded(result) {
   return {
@@ -11,7 +8,7 @@ function fundsAdded(result) {
   }
 }
 
-export function addFunds() {
+export function addFunds(fundsToAdd) {
   let web3 = store.getState().web3.web3Instance
   let projectAddress = store.getState().user.data.project
 
@@ -27,7 +24,7 @@ export function addFunds() {
         web3.eth.sendTransaction({
           from: coinbase,
           to: projectAddress,
-          value: web3.toWei(FUNDS_TO_ADD, 'ether')
+          value: web3.toWei(fundsToAdd, 'ether')
         }, (error, result) => {
           if (error) { console.error(error) }
           dispatch(fundsAdded(result))

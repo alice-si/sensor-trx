@@ -10,7 +10,7 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onAddSensorClick: (event) => {
       event.preventDefault();
-      dispatch(addSensor())
+      dispatch(addSensor(props.address))
       props.onClick()
     }
   }

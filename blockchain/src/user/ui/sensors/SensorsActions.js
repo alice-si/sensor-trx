@@ -56,7 +56,6 @@ export function fetchSensors() {
                       })
                       dispatch(sensorsReceived(sensors))
                     })
-
                 })
             })
 
