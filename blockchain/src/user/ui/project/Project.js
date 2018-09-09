@@ -47,10 +47,8 @@ class Project extends Component {
             </Typography>
           </Grid>
           <Grid item xs={2} />
-          <Grid item xs={2}>
-            Balance: {project.balance}
-          </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
+            Balance: {project.balance} ETH
             <Tooltip title="Add">
               <Button color="primary"
                       variant="contained"
