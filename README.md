@@ -20,7 +20,7 @@ Relayers only receive a bounty if the message effectively verifies a claim.
 SMART CONTRACTS
 
 Authentication contract: admin gateway that ensures only the authorised project administrator can manage sensors.  
-Project contract: this is the main inteface for the SensorTRX protocol, allowing calls to the sensor management, signature verification and charity claims contracts. Relayers can perform a query on the validity of signed sensor messages here. The Project contract also pays out bounties to relayers.  
+Project contract: this is the main interface for the SensorTRX protocol, allowing calls to the sensor management, signature verification and charity claims contracts. Relayers can perform a query on the validity of signed sensor messages here. The Project contract also pays out bounties to relayers.  
 Sensor management contract: allows the project manager to create authorised sensors (whitelist) and activate or deactivate them (in case they become unresponsive)  
 Verifier contract: verifies the signature of whitelisted sensors  
 Claims registry contract: records the claims made by charities (in this implementation)  
