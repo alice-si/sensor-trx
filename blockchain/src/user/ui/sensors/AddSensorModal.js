@@ -24,6 +24,8 @@ const styles = theme => ({
     width: '100%',
   },
   actions: {
+    padding: '30px',
+    paddingTop: '0',
   }
 });
 

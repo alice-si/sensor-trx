@@ -27,6 +27,8 @@ const styles = theme => ({
   addButton: {
   },
   actions: {
+    padding: '30px',
+    paddingTop: '0',
   }
 });
 

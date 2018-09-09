@@ -27,6 +27,8 @@ const styles = theme => ({
   addButton: {
   },
   actions: {
+    padding: '30px',
+    paddingTop: '0',
   }
 });
 
@@ -91,6 +93,7 @@ class SimpleClaimModal extends React.Component {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  style={{marginTop: '15px'}}
                   onChange={this.handleChange('date')}
                 />
               </CardContent>
