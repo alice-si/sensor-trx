@@ -1,3 +1,6 @@
+
+*Please use the following sensor address for the testing purpose 0x01db8c011f8caa93479fa6db874e08156c7d02ab*
+
 INTRO
 
 SensorTRX is a project that was hacked during EthBerlin 2018.  
