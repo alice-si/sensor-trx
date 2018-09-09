@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
-import AddClaimButtonContainer from '../../user/ui/addclaimbutton/AddClaimButtonContainer'
+import AddClaimButtonContainer from '../addclaimbutton/AddClaimButtonContainer'
 
 
 const styles = theme => ({
@@ -68,7 +68,7 @@ class SimpleClaimModal extends React.Component {
                 />
               </CardContent>
               <CardActions className={classes.actions}>
-                <AddClaimButtonContainer />
+                <AddClaimButtonContainer onClick={this.handleClose} />
               </CardActions>
             </div>
           </Modal>

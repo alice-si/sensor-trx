@@ -38,10 +38,9 @@ export function fetchSensors() {
 
         sensorsManagerInstance.getSensorsCount({from: coinbase}).then((sensorCount) => {
           const numSensors = sensorCount.toNumber()
-          console.log('numSensors', numSensors)
           let sensors = []
           if (numSensors > 0) {
-            const range = [...Array(sensorCount.toNumber()).keys()]
+            const range = [...Array(numSensors).keys()]
             range.forEach((index) => {
               sensorsManagerInstance.getSensorsAt(index)
                 .then((sensorAddress) => {

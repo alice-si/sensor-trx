@@ -1,10 +1,12 @@
 import AuthenticationContract from '../../../../build/contracts/Authentication.json'
 import ProjectContract from '../../../../build/contracts/Project.json'
 import SensorsManagerContract from '../../../../build/contracts/SensorsManager.json'
+import ClaimsRegistryContract from '../../../../build/contracts/ClaimsRegistry.json'
 import { browserHistory } from 'react-router'
 import store from '../../../store'
 
 import { fetchSensors } from "../sensors/SensorsActions";
+import { fetchClaims } from "../claims/ClaimsActions";
 
 const contract = require('truffle-contract')
 
@@ -59,35 +61,59 @@ export function loginUser() {
               console.log('sensorsManagerAddress', sensorsManagerAddress)
               user.sensorsManagerAddress = sensorsManagerAddress
 
-              dispatch(userLoggedIn(user));
-
+              ////////////////////////////////////
+              // SensorsManager Event Watchers //
+              //////////////////////////////////
               let sensorsManagerContract = contract(SensorsManagerContract)
               sensorsManagerContract.setProvider(web3.currentProvider)
 
               let sensorsManagerInstance = sensorsManagerContract.at(sensorsManagerAddress)
-              sensorsManagerInstance.SensorActivated().watch ( (err, response) => {
+              sensorsManagerInstance.SensorActivated().watch((err, response) => {
                 console.log('Sensor Activated Event', response)
                 dispatch(fetchSensors())
               });
-              sensorsManagerInstance.SensorDeactivated().watch ( (err, response) => {
+              sensorsManagerInstance.SensorDeactivated().watch((err, response) => {
                 console.log('Sensor Deactivated Event', response)
                 dispatch(fetchSensors())
               });
-              sensorsManagerInstance.SensorAdded().watch ( (err, response) => {
+              sensorsManagerInstance.SensorAdded().watch((err, response) => {
                 console.log('Sensor Added Event', response)
                 dispatch(fetchSensors())
               });
 
-              // Used a manual redirect here as opposed to a wrapper.
-              // This way, once logged in a user can still access the home page.
-              var currentLocation = browserHistory.getCurrentLocation()
+              let projectInstance = projectContract.at(projectAddress)
+              projectInstance.claimsRegistry().then((claimsRegistryAddress) => {
+                console.log('claimsRegistryAddress', claimsRegistryAddress)
+                user.claimsRegistryAddress = claimsRegistryAddress
 
-              if ('redirect' in currentLocation.query)
-              {
-                return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
-              }
+                ////////////////////////////////////
+                // ClaimsRegistry Event Watchers //
+                //////////////////////////////////
+                let claimsRegistryContract = contract(ClaimsRegistryContract)
+                claimsRegistryContract.setProvider(web3.currentProvider)
 
-              return browserHistory.push('/dashboard')
+                let claimsRegistryInstance = claimsRegistryContract.at(claimsRegistryAddress)
+                claimsRegistryInstance.ClaimAdded().watch((err, response) => {
+                  console.log('Claim Added Event', response)
+                  dispatch(fetchClaims())
+                });
+                claimsRegistryInstance.ClaimValidated().watch((err, response) => {
+                  console.log('Claim Validated Event', response)
+                  dispatch(fetchClaims())
+                });
+
+                dispatch(userLoggedIn(user));
+
+                // Used a manual redirect here as opposed to a wrapper.
+                // This way, once logged in a user can still access the home page.
+                var currentLocation = browserHistory.getCurrentLocation()
+
+                if ('redirect' in currentLocation.query) {
+                  return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
+                }
+
+                return browserHistory.push('/dashboard')
+              })
             })
           })
           .catch(function(result) {
