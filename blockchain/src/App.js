@@ -46,9 +46,6 @@ class App extends Component {
         <Button color="inherit" href="/dashboard">
           Dashboard
         </Button>
-        <Button color="inherit" href="/profile">
-          Profile
-        </Button>
         <LogoutButtonContainer />
       </span>
     )

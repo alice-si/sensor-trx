@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SensorsContainer from '../../user/ui/sensors/SensorsContainer';
 import ClaimsContainer from '../../user/ui/claims/ClaimsContainer';
+import ProjectContainer from '../../user/ui/project/ProjectContainer';
 
 const styles = theme => ({
   root: {
@@ -48,6 +49,9 @@ class Dashboard extends Component {
   render() {
     return(
       <Grid container spacing={40}>
+        <Grid item xs={12}>
+          <ProjectContainer />
+        </Grid>
         <Grid item xs={6}>
           <SensorsContainer />
         </Grid>
