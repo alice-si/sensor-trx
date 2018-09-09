@@ -13,7 +13,7 @@ If everything checks out, the Relayer can then send the signed data to the smart
 IMPLEMENTATION
 
 This implementation was coded during EthBerlin and integrates with the Alice (www.alice.si) "donation by results" protocol.  
-It allows charities to verify claims that they have achieved their goals by broadcasting signed messages on Telegram.  
+It allows charities to verify claims that they have achieved their goals by broadcasting signed messages on Telegram (this could be any public posting service).  
 Relayers can check whether the sensor will successfully validate a charity claim before relaying the message.  
 Relayers only receive a bounty if the message effectively verifies a claim.  
 
