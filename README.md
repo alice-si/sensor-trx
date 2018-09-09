@@ -10,7 +10,7 @@ Sensors simply sign their data with an elliptic curve digital signature and broa
 Relayers can pick up these messages and carry out a (free) off-chain verification of the validity of the message by querying the the target smart contract to avoid unnecessary overhead.  
 If everything checks out, the Relayer can then send the signed data to the smart contract. Once accepted, the Relayer automatically receives a bounty reward for relaying the message.  
 
-IMPLEMENTATION
+IMPLEMENTATION FOR CHARITIES
 
 This implementation was coded during EthBerlin and integrates with the Alice (www.alice.si) "donation by results" protocol.  
 It allows charities to verify claims that they have achieved their goals by broadcasting signed messages on Telegram (this could be any public posting service).  
