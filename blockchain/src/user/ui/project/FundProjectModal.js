@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
-import AddClaimButtonContainer from '../addclaimbutton/AddClaimButtonContainer'
+import FundProjectButtonContainer from '../fundprojectbutton/FundProjectButtonContainer'
 
 
 const styles = theme => ({
@@ -61,14 +61,14 @@ class SimpleClaimModal extends React.Component {
                 </Typography>
                 <TextField
                   id="uncontrolled"
-                  label="Available Bounty"
+                  label="Bounty Amount (ETH)"
                   defaultValue=""
                   className={classes.textField}
                   margin="normal"
                 />
               </CardContent>
               <CardActions className={classes.actions}>
-                <AddClaimButtonContainer onClick={this.handleClose} />
+                <FundProjectButtonContainer onClick={this.handleClose} />
               </CardActions>
             </div>
           </Modal>
