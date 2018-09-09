@@ -2,7 +2,7 @@
 const Web3 = require('truffle-contract/node_modules/web3');
 const Contract = require('truffle-contract');
 const Promise = require('bluebird');
-const Config = require('./config');
+const Config = require('../config');
 
 const provider = new Web3.providers.HttpProvider('http://localhost:8545');
 const web3 = new Web3();
@@ -49,17 +49,7 @@ function testDeployment() {
           console.log(err);
         });
       });
-  });
-
-
-
-
-
-
-
-
-
-
+    });
   });
 }
 
@@ -67,7 +57,7 @@ function testDeployment() {
 function loadContract(contractName) {
   // TODO clean logging
   console.log('Contract loading ' + contractName);
-  const contractsFolder = '../blockchain/build/contracts/';
+  const contractsFolder = '../../blockchain/build/contracts/';
 
   console.log('Getting artefacts from folder ' + contractsFolder);
   const artefacts = require(contractsFolder + contractName + '.json');
