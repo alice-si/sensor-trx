@@ -3,7 +3,7 @@ const Web3Utils = require('web3-utils');
 const Config = require('./config');
 const ethUtil = require('ethereumjs-util');
 
-const frequency = 15; // seconds
+const frequency = 60; // seconds
 
 setInterval(run, frequency * 1000);
 
