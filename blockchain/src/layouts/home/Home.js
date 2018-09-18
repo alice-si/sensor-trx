@@ -11,7 +11,7 @@ class Home extends Component {
               charity sensor oracles</h2>
             <p>Built by Alice & friends - Ethereum infrastructure for social good</p>
 
-            <img src="https://s3.eu-west-2.amazonaws.com/alice-res/trx.png" width="400px" />
+            <img id="trx" src="https://s3.eu-west-2.amazonaws.com/alice-res/trx.png" width="400px" />
 
             <ul>
               <li><b>No hassle</b>: no need to create & manage Ethereum accounts for each sensor</li>

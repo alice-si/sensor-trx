@@ -1,3 +1,12 @@
+
+*Please use the following sensor address for the testing purpose **0x01db8c011f8caa93479fa6db874e08156c7d02ab**
+
+INTRO
+
+SensorTRX is a project that was hacked during EthBerlin 2018.  
+A presentation of the project can be found here: https://tinyurl.com/y7dufof3  
+A demo of the project can be found here: http://sensor-trx.alice.si/  
+
 OVERVIEW
 
 SensorTRX is a lightweight protocol for sensor oracles.  
@@ -24,5 +33,3 @@ Project contract: this is the main interface for the SensorTRX protocol, allowin
 Sensor management contract: allows the project manager to create authorised sensors (whitelist) and activate or deactivate them (in case they become unresponsive)  
 Verifier contract: verifies the signature of whitelisted sensors  
 Claims registry contract: records the claims made by charities (in this implementation)  
-
-DEPLOYMENT
