@@ -1,5 +1,6 @@
 
-*Please use the following sensor address for the testing purpose **0x01db8c011f8caa93479fa6db874e08156c7d02ab**
+*Please use the following sensor address for the testing purpose **0x01db8c011f8caa93479fa6db874e08156c7d02ab** / Simulation currently not in operation, check back for more information.*
+
 
 INTRO
 
